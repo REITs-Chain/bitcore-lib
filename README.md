@@ -9,11 +9,11 @@ A pure and powerful JavaScript Bitcoin library.
 ## Get Started
 
 ```
-npm install bitcore-lib
+npm install reitscore-lib
 ```
 
 ```
-bower install bitcore-lib
+bower install reitscore-lib
 ```
 
 ## Documentation
@@ -54,7 +54,7 @@ This will generate files named `bitcore-lib.js` and `bitcore-lib.min.js`.
 ## Development & Tests
 
 ```sh
-git clone https://github.com/bitpay/bitcore-lib
+git clone https://github.com/cssxn/bitcore-lib
 cd bitcore-lib
 npm install
 ```
