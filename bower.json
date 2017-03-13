@@ -1,5 +1,5 @@
 {
-  "name": "bitcore-lib",
+  "name": "reitscore-lib",
   "main": "./bitcore-lib.min.js",
   "version": "0.13.19",
   "homepage": "http://bitcore.io",
