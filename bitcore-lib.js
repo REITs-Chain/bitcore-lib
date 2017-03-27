@@ -9046,6 +9046,7 @@ Output.prototype.inspect = function() {
 
 Output.fromBufferReader = function(br) {
   var obj = {};
+  obj.assetType = br.readUInt32LE();
   obj.satoshis = br.readUInt64LEBN();
   var size = br.readVarintNum();
   if (size !== 0) {
@@ -10008,13 +10009,32 @@ Transaction.prototype.feePerKb = function(amount) {
  * @param {Address} address An address for change to be sent to.
  * @return {Transaction} this, for chaining
  */
-Transaction.prototype.change = function(address) {
+// Transaction.prototype.change = function(address) {
+//   $.checkArgument(address, 'address is required');
+//   this._changeScript = Script.fromAddress(address);
+//   this._updateChangeOutput();
+//   return this;
+// };
+
+Transaction.prototype.change = function(address, assetType) {
   $.checkArgument(address, 'address is required');
-  this._changeScript = Script.fromAddress(address);
-  this._updateChangeOutput();
+
+  var available = this._getUnspentValue();
+  var changeAmount = available;
+  if (changeAmount > 0) {
+    this._changeIndex = this.outputs.length;
+    this._addOutput(new Output({
+      script: Script.fromAddress(address),
+      satoshis: changeAmount,
+      assetType: assetType,
+    }));
+  } else {
+    this._changeIndex = undefined;
+  }
+
+  // this._updateChangeOutput();
   return this;
 };
-
 
 /**
  * @return {Output} change output, if it exists
@@ -10042,11 +10062,11 @@ Transaction.prototype.getChangeOutput = function() {
  * @param {number} amount in satoshis
  * @return {Transaction} this, for chaining
  */
-Transaction.prototype.to = function(address, amount,assetType) {
+Transaction.prototype.to = function(address, amount, assetType) {
   if (_.isArray(address)) {
     var self = this;
     _.each(address, function(to) {
-      self.to(to.address, to.satoshis);
+      self.to(to.address, to.satoshis, to.assetType);
     });
     return this;
   }
@@ -10595,7 +10615,8 @@ function UnspentOutput(data) {
   var script = new Script(data.scriptPubKey || data.script);
   $.checkArgument(!_.isUndefined(data.amount) || !_.isUndefined(data.satoshis),
                   'Must provide an amount for the output');
-  var amount = !_.isUndefined(data.amount) ? new Unit.fromBTC(data.amount).toSatoshis() : data.satoshis;
+  // var amount = !_.isUndefined(data.amount) ? new Unit.fromBTC(data.amount).toSatoshis() : data.satoshis;
+  var amount = !_.isUndefined(data.amount) ? new Unit.fromBTC(data.amount).toBTC() : data.satoshis;
   $.checkArgument(_.isNumber(amount), 'Amount must be a number');
 
   if(_.isNumber(data.assetType)){
@@ -52579,8 +52600,8 @@ exports.createContext = Script.createContext = function (context) {
 
 },{"indexof":180}],237:[function(require,module,exports){
 module.exports={
-  "name": "bitcore-lib",
-  "version": "0.13.19",
+  "name": "reitscore-lib",
+  "version": "0.14.0",
   "description": "A pure and powerful JavaScript Bitcoin library.",
   "author": "danyang.wang@gmail.com",
   "main": "index.js",
