@@ -34,6 +34,7 @@ utxo = {
 var transaction = new bitcore.Transaction()
     .from(utxo)
     .to('15rtjeTJJ2hL83cGmNQRRNS4Uamq2bKcSo', 200,0)
+    .change('1Po5H7YTa5hxRydP3SpaxqiTcmremacgZ6',0)
     .sign("9f84cef8f37540babcc10c8557a378b0fb3a9857c5b344782a032c22abd60198"); // 这里是rootPrivateKey字符串、还是privateKey对象都行
 
 
