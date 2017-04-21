@@ -1,6 +1,6 @@
 {
   "name": "reitscore-lib",
-  "version": "0.14.0",
+  "version": "0.14.1",
   "description": "A pure and powerful JavaScript Bitcoin library.",
   "author": "danyang.wang@gmail.com",
   "main": "index.js",
@@ -10,22 +10,6 @@
     "coverage": "gulp coverage",
     "build": "gulp"
   },
-  "keywords": [
-    "bitcoin",
-    "transaction",
-    "address",
-    "p2p",
-    "ecies",
-    "cryptocurrency",
-    "blockchain",
-    "payment",
-    "bip21",
-    "bip32",
-    "bip37",
-    "bip69",
-    "bip70",
-    "multisig"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/cssxn/bitcore-lib.git"
